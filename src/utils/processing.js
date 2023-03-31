@@ -36,7 +36,7 @@ export function buildTweetCollection(parsedMetadata) {
         tweetData.content.quotedTweet = metaVal;
         continue;
       }
-      if (metaKey === "commentCount") {
+      if (metaKey === "commentCount" || metaKey === "position") {
         continue;
       }
       if (metaKey === "isPartOf") {
@@ -57,6 +57,12 @@ export function buildTweetCollection(parsedMetadata) {
         tweetData.author.handle = metadata.additionalName;
         tweetData.author.selfName = metadata.givenName;
       }
+      if (scope === "https://schema.org/CreativeWork") {
+        const { url } = metadata;
+        if (!url.includes(tweetURL)) {
+          tweetData.content.attachedURL = url;
+        }
+      }
       if (scope === "https://schema.org/InteractionCounter") {
         tweetData[metadata.name.toLowerCase() + "Count"] =
           metadata.userInteractionCount;
@@ -67,7 +73,7 @@ export function buildTweetCollection(parsedMetadata) {
         }
         const imageData = {};
         for (let metaKey in metadata) {
-          const metaVal = metadata[metaKey];
+          let metaVal = metadata[metaKey];
           if (metaKey === "contentUrl") {
             metaKey = "imageURL";
           }
@@ -75,7 +81,11 @@ export function buildTweetCollection(parsedMetadata) {
             metaKey = "thumbnailURL";
           }
           if (metaKey === "caption") {
-            metaKey = "altText";
+            if (metaVal === "Image") {
+              metaVal = "";
+            } else {
+              metaKey = "altText";
+            }
           }
           if (metaVal) {
             imageData[metaKey] = metaVal;

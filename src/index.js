@@ -2,7 +2,10 @@ import express from "express";
 const app = express();
 import TweetRouter from "./routes/tweet.js";
 import ProfileRouter from "./routes/profile.js";
+import { keyCheck } from "./middleware/auth.js";
 const port = process.env.PORT || 3000;
+
+app.use(keyCheck);
 
 app.use("/tweet", TweetRouter);
 app.use("/profile", ProfileRouter);
