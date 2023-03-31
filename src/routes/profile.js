@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   res.status(400).send(`user handle required: /profile/{handle}`);
-  next();
 });
 
 router.get("/raw/:handle", async (req, res) => {
