@@ -53,9 +53,13 @@ export function buildTweetCollection(parsedMetadata) {
     tweet.children.forEach((child) => {
       const { scope, metadata } = child;
       if (scope === "https://schema.org/Person") {
-        tweetData.author.id = metadata.identifier;
-        tweetData.author.handle = metadata.additionalName;
-        tweetData.author.selfName = metadata.givenName;
+        const {
+          identifier: id,
+          additionalName: handle,
+          givenName: selfName,
+          disambiguatingDescription: disambiguatingDescriptor,
+        } = metadata;
+        tweetData.author = { id, handle, selfName, disambiguatingDescriptor };
       }
       if (scope === "https://schema.org/CreativeWork") {
         const { url } = metadata;
