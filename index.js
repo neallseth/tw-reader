@@ -1,8 +1,11 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 const app = express();
 import TweetRouter from "./routes/tweet.js";
 import UserRouter from "./routes/user.js";
 import { keyCheck } from "./middleware/auth.js";
+
 const port = process.env.PORT || 3000;
 
 app.use(keyCheck);
@@ -10,7 +13,7 @@ app.use(keyCheck);
 app.use("/tweet", TweetRouter);
 app.use("/user", UserRouter);
 
-app.get("*", (req, res) => {
+app.get("*", async (req, res) => {
   res.status(400);
   res.json({
     appName: "Twitter Reader",
