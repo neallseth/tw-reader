@@ -25,8 +25,13 @@ export async function disconnectRedisClient(client) {
 }
 
 export async function isAuthorized(id, client) {
+  const key = id.toString();
   try {
-    return await client.exists(`${id}`);
+    const keyExists = await client.exists(key);
+    if (keyExists) {
+      await client.incr(key);
+    }
+    return keyExists;
   } catch (err) {
     console.log(err);
   }
