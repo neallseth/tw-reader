@@ -2,32 +2,14 @@ export function buildTweetCollection(parsedMetadata) {
   const tweetCollection = [];
   const tweetMap = {};
 
-  parsedMetadata?.children?.forEach((tweet) => {
+  function pullTweetData(tweet) {
     const tweetData = {
       content: {},
       author: {},
     };
-    const tweetURL = tweet.metadata.url;
-    // const {url: tweetURL, articleBody, isBasedOn: quotedTweet, commentCount, contentRating} = tweet.metadata
 
     for (let metaKey in tweet.metadata) {
       const metaVal = tweet.metadata[metaKey];
-
-      // switch (metaKey) {
-      //   case "articleBody":
-      //     tweetData.content.text = metaVal;
-      //     break;
-      //   case "isBasedOn":
-      //     tweetData.content.quotedTweet = metaVal;
-      //     break;
-      //   case "commentCount":
-      //     break;
-      //   case "isPartOf":
-      //     metaKey = "replyTo";
-      //   case "identifier":
-      //     metaKey = "tweetID";
-      // }
-
       if (metaKey === "articleBody") {
         tweetData.content.text = metaVal;
         continue;
@@ -52,6 +34,10 @@ export function buildTweetCollection(parsedMetadata) {
 
     tweet.children.forEach((child) => {
       const { scope, metadata } = child;
+      if (scope === "https://schema.org/SocialMediaPosting") {
+        tweetData.content.retweet = pullTweetData(child);
+        tweetData.isRetweet = true;
+      }
       if (scope === "https://schema.org/Person") {
         const {
           identifier: id,
@@ -63,7 +49,7 @@ export function buildTweetCollection(parsedMetadata) {
       }
       if (scope === "https://schema.org/CreativeWork") {
         const { url } = metadata;
-        if (!url.includes(tweetURL)) {
+        if (!url.includes(tweet.metadata.url)) {
           tweetData.content.attachedURL = url;
         }
       }
@@ -120,8 +106,13 @@ export function buildTweetCollection(parsedMetadata) {
       }
     });
 
+    return tweetData;
+  }
+
+  parsedMetadata?.children?.forEach((tweet) => {
+    const tweetData = pullTweetData(tweet);
     tweetCollection.push(tweetData);
-    tweetMap[tweetURL] = tweetData;
+    tweetMap[tweet.metadata.url] = tweetData;
   });
 
   return [tweetCollection, tweetMap];
