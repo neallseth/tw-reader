@@ -25,6 +25,10 @@ app.get("*", async (req, res) => {
       },
       {
         endpoint: "/user/{handle}",
+        description: "Retrieve a user's profile and account information",
+      },
+      {
+        endpoint: "/user/{handle}/tweets",
         description: "Retrieve a user's recent non-reply tweets",
       },
       {

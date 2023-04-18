@@ -2,6 +2,7 @@ import express from "express";
 import microdataParse from "micro-parse";
 import { buildTweetCollection } from "../utils/processing.js";
 import { fetchMarkup } from "../utils/interservice.js";
+import { pullProfileData } from "../utils/metadata.js";
 
 const router = express.Router();
 
@@ -28,6 +29,14 @@ router.get("/parsed/:handle", async (req, res) => {
 });
 
 router.get("/:handle", async (req, res) => {
+  const htmlText = await fetchMarkup(
+    `https://twitter.com/${req.params.handle}`
+  );
+  const profileData = pullProfileData(htmlText);
+  res.json(profileData);
+});
+
+router.get("/:handle/tweets", async (req, res) => {
   const htmlText = await fetchMarkup(
     `https://twitter.com/${req.params.handle}`
   );

@@ -729,7 +729,7 @@ negotiator@0.6.3:
   resolved "https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-node-html-parser@^6.1.4:
+node-html-parser@^6.1.4, node-html-parser@^6.1.5:
   version "6.1.5"
   resolved "https://registry.npmjs.org/node-html-parser/-/node-html-parser-6.1.5.tgz"
   integrity sha512-fAaM511feX++/Chnhe475a0NHD8M7AxDInsqQpz6x63GRF7xYNdS8Vo5dKsIVPgsOvG7eioRRTZQnWBrhDHBSg==
