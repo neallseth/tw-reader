@@ -33,7 +33,13 @@ router.get("/:handle", async (req, res) => {
     `https://twitter.com/${req.params.handle}`
   );
   const profileData = pullProfileData(htmlText);
-  res.json(profileData);
+  if (profileData) {
+    res.json(profileData);
+  } else {
+    res
+      .status(400)
+      .json({ status: "error", message: "Profile data inaccessible" });
+  }
 });
 
 router.get("/:handle/tweets", async (req, res) => {

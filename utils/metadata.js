@@ -1,11 +1,18 @@
+import { raw } from "express";
 import { parse } from "node-html-parser";
 
 export function pullProfileData(html) {
   const rootNode = parse(html);
 
-  const baseData = JSON.parse(
-    rootNode.querySelectorAll('[type="application/ld+json"]')[1].innerText
-  );
+  const rawBaseData = rootNode.querySelectorAll(
+    '[type="application/ld+json"]'
+  )[1]?.innerText;
+
+  if (!rawBaseData) {
+    return;
+  }
+
+  const baseData = JSON.parse(rawBaseData);
 
   const { author } = baseData;
 
