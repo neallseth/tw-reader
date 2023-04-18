@@ -20,9 +20,9 @@ export function pullProfileData(html) {
     accountCreatedDate: baseData.dateCreated,
     userSetName: author.givenName,
     handle: author.additionalName,
-    bio: author.description,
+    userBio: author.description,
     accountDisambiguator: author.disambiguatingDescription,
-    location: author.homeLocation.name,
+    userSetLocation: author.homeLocation.name,
     userID: author.identifier,
     profileImage: {
       fullSize: author.image.contentUrl,
