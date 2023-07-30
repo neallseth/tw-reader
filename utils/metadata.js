@@ -22,7 +22,7 @@ export function pullProfileData(html) {
     handle: author.additionalName,
     userBio: author.description,
     accountDisambiguator: author.disambiguatingDescription,
-    userSetLocation: author.homeLocation.name,
+    location: author.homeLocation.name,
     userID: author.identifier,
     profileImage: {
       fullSize: author.image.contentUrl,
@@ -44,30 +44,30 @@ export function pullProfileData(html) {
 
   return profileData;
 
-  const profileURLSplit = rootNode
-    .querySelector('[property="og:url"]')
-    .getAttribute("content")
-    .split("/");
-  const userHandle = profileURLSplit[profileURLSplit.length - 1];
+  // const profileURLSplit = rootNode
+  //   .querySelector('[property="og:url"]')
+  //   .getAttribute("content")
+  //   .split("/");
+  // const userHandle = profileURLSplit[profileURLSplit.length - 1];
 
-  const ogImageNode = rootNode.querySelector('[property="og:image"]');
-  const ogDescriptionNode = rootNode.querySelector(
-    '[property="og:description"]'
-  );
-  const followingNode = rootNode.querySelector(
-    `a[href="/${userHandle}/following"]`
-  );
-  const followingCount = followingNode.innerText.split(" ")[0];
+  // const ogImageNode = rootNode.querySelector('[property="og:image"]');
+  // const ogDescriptionNode = rootNode.querySelector(
+  //   '[property="og:description"]'
+  // );
+  // const followingNode = rootNode.querySelector(
+  //   `a[href="/${userHandle}/following"]`
+  // );
+  // const followingCount = followingNode.innerText.split(" ")[0];
 
-  const followersNode = rootNode.querySelector(
-    `a[href="/${userHandle}/followers"]`
-  );
-  const followerCount = followersNode.innerText.split(" ")[0];
+  // const followersNode = rootNode.querySelector(
+  //   `a[href="/${userHandle}/followers"]`
+  // );
+  // const followerCount = followersNode.innerText.split(" ")[0];
 
-  profileData.userImage = ogImageNode.getAttribute("content");
-  profileData.userBio = ogDescriptionNode.getAttribute("content");
-  profileData.userHandle = userHandle;
-  profileData.userFollowingCount = followingCount;
-  profileData.userFollowerCount = followerCount;
-  return profileData;
+  // profileData.userImage = ogImageNode.getAttribute("content");
+  // profileData.userBio = ogDescriptionNode.getAttribute("content");
+  // profileData.userHandle = userHandle;
+  // profileData.userFollowingCount = followingCount;
+  // profileData.userFollowerCount = followerCount;
+  // return profileData;
 }
