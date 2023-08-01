@@ -18,7 +18,8 @@ export function buildTweetCollection(parsedMetadata) {
         tweetData.content.quotedTweet = metaVal;
         continue;
       }
-      if (metaKey === "commentCount" || metaKey === "position") {
+      if (["commentCount", "position", "dateCreated"].includes(metaKey)) {
+        // if metaKey is one of the keys we want to ignore, skip
         continue;
       }
       if (metaKey === "isPartOf") {
