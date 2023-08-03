@@ -4,6 +4,7 @@ import express from "express";
 const app = express();
 import TweetRouter from "./routes/tweet.js";
 import UserRouter from "./routes/user.js";
+import SearchRouter from "./routes/search.js";
 import { keyCheck } from "./middleware/auth.js";
 
 const port = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.use(keyCheck);
 
 app.use("/tweet", TweetRouter);
 app.use("/user", UserRouter);
+app.use("/search", SearchRouter);
 
 app.get("*", async (req, res) => {
   res.status(400);
