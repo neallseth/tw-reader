@@ -45,6 +45,7 @@ async function getTweetData(targetURL, query, pages = 2) {
 }
 
 async function getTweetsFromURL(targetURL, query) {
+  console.log("fetching: ", targetURL);
   const response = await fetch(targetURL);
   const html = await response.text();
 
