@@ -26,8 +26,14 @@ router.get("/", async (req, res) => {
   const targetURL = `https://nitter.net/search?f=tweets&q=${query}&e-nativeretweets=on&since=${
     dateStart ?? date30DaysAgo()
   }&until=${dateEnd ?? ""}`;
-
-  const tweetData = await getTweetData(targetURL, query, volCountMap[vol] ?? 2);
+  let tweetData;
+  try {
+    tweetData = await getTweetData(targetURL, query, volCountMap[vol] ?? 2);
+  } catch (err) {
+    console.error(err);
+    res.status(500);
+    res.json({ status: "error", message: err.toString() });
+  }
   res.json(tweetData);
 });
 
