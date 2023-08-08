@@ -4,6 +4,9 @@ import { date30DaysAgo } from "../utils/general.js";
 
 const router = express.Router();
 
+// const nitterURL = 'https://nitter.net';
+const nitterURL = "https://tweet.whateveritworks.org";
+
 const volCountMap = {
   low: 1,
   med: 2,
@@ -23,7 +26,7 @@ router.get("/", async (req, res) => {
     res.status(400);
     res.json({ status: "error", message: "no query received" });
   }
-  const targetURL = `https://nitter.net/search?f=tweets&q=${query}&e-nativeretweets=on&since=${
+  const targetURL = `${nitterURL}/search?f=tweets&q=${query}&e-nativeretweets=on&since=${
     dateStart ?? date30DaysAgo()
   }&until=${dateEnd ?? ""}`;
   let tweetData;
@@ -61,7 +64,7 @@ async function getTweetsFromURL(targetURL, query) {
   const tweetEls = document.querySelectorAll(".timeline-item:not(.show-more)");
   const nextPageLink = new URL(
     document.querySelector(".show-more>a")?.getAttribute("href"),
-    "https://nitter.net/search"
+    `${nitterURL}/search`
   ).href;
 
   tweetEls.forEach((tweet) => {
